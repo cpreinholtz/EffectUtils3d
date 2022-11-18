@@ -24,8 +24,8 @@ int run_tests() {
     // Coordinates
     //**************************************************************
     //create 2 objects using both constructors
-    Coord3d testCoord(0,0,0);
-    Coord3d testCoord2;
+    Vector3d testCoord(0,0,0);
+    Vector3d testCoord2;
     cout << testCoord << testCoord2 << endl;//expect (000)(000)
 
     //set one using set(x,y,z)
@@ -52,9 +52,9 @@ int run_tests() {
     // Vectors
     //**************************************************************
     //create 3 objects using all constructors
-    Vector testVector1;
-    Vector testVector2(1,2,3);
-    Vector testVector3(testCoord2);
+    Vector3d testVector1;
+    Vector3d testVector2(1,2,3);
+    Vector3d testVector3(testCoord2);
     cout << testVector1 << testVector2 << testVector3 << endl;//expect (000)(123)(789)
 
 
@@ -67,15 +67,14 @@ int run_tests() {
     cout << testVector1 + testVector2 << testVector3 - testVector1 << endl; //expect (4,8,12)(1.8,1.2,0.6)
 
 
-    testVector1.set(testCoord2);
+    testVector1 = testCoord2;
     testVector2.set(0, 0, 0);
     testVector3.set(-1, 2, -3);
     cout << testVector1 << testVector2 << testVector3 << endl;//expect (789)(000)(-1,2,-3)
-    cout << testVector1.getComponents() << testVector2.getComponents() << testVector3.getComponents() << endl;//expect (789)(000)(-1,2,-3)
 
-    cout << testVector1.getLength() << endl;  //expect 13.928
-    cout << testVector2.getLength() << endl;  //expect 0
-    cout << testVector3.getLength() << endl;  //expect 3.742
+    cout << testVector1.length() << endl;  //expect 13.928
+    cout << testVector2.length() << endl;  //expect 0
+    cout << testVector3.length() << endl;  //expect 3.742
 
     testVector1.set(0, 0, 1);
     testVector1.roll(PI / 2);//roll left
@@ -91,8 +90,8 @@ int run_tests() {
     //**************************************************************
     testCoord2.set(1, -2, 3);
     testVector3.set(-1, 2, -3);
-    Plane p1;
-    Plane p2(testCoord2, testVector3);
+    Plane3d p1;
+    Plane3d p2(testCoord2, testVector3);
 
     cout << p1.getRefPoint() << p1.getNormalVector() << endl; //expect (0,0,0)<1,0,0>
     cout << p2.getRefPoint() << p2.getNormalVector() << endl; //expect (1,-2,3)<-0.267,0.534,-0.802>
@@ -115,38 +114,38 @@ int run_tests() {
     testVector3.set(1, 0, 0);
     p1.set(testCoord2, testVector3);
     cout << p1.getRefPoint() << p1.getNormalVector() << endl; //expect (1,2,3)<1,0,0>
-    cout << p1.getDistance(2,2,3)  << endl; //expect 1
-    cout << p1.getDistance(2, 248, -83) << endl; // xpect 1
+    cout << p1.distance(2,2,3)  << endl; //expect 1
+    cout << p1.distance(2, 248, -83) << endl; // xpect 1
 
     //test distance functions
     testCoord2.set(1, 2, 3);
     testVector3.set(1, 0, 0);
     p1.set(testCoord2, testVector3);
     cout << p1.getRefPoint() << p1.getNormalVector() << endl; //expect (1,2,3)<1,0,0>
-    cout << p1.getDistance(10, 2, 3) << endl; //expect 9
-    cout << p1.getDistance(100, 248, -83) << endl; // xpect 99
+    cout << p1.distance(10, 2, 3) << endl; //expect 9
+    cout << p1.distance(100, 248, -83) << endl; // xpect 99
 
     //test distance functions
     testCoord2.set(-1, -1, -1);
     testVector3.set(1, 1, 1);
     p1.set(testCoord2, testVector3);
-    cout << p1.getDistance(0, 0, 0) << endl; //expect 1.732
+    cout << p1.distance(0, 0, 0) << endl; //expect 1.732
 
     testCoord2.set(-1, -1, -1);
     testVector3.set(-1, -1, -1);
     p1.set(testCoord2, testVector3);
-    cout << p1.getDistance(0, 0, 0) << endl; //expect 1.732
+    cout << p1.distance(0, 0, 0) << endl; //expect 1.732
 
     testCoord2.set(1, 1, 1);
     testVector3.set(-1, -1, -1);
     p1.set(testCoord2, testVector3);
-    cout << p1.getDistance(0, 0, 0) << endl; //expect 1.732
+    cout << p1.distance(0, 0, 0) << endl; //expect 1.732
 
 
     testCoord2.set(10, 10, 10);
     testVector3.set(-99, 1, 1);
     p1.set(testCoord2, testVector3);
-    cout << p1.getDistance(0, 0, 0) << endl; //nearly 10
+    cout << p1.distance(0, 0, 0) << endl; //nearly 10
 
     cout << "press enter to continue\n";
     while (cin.get() != '\n');
