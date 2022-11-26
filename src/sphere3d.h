@@ -27,7 +27,7 @@ public:
     //**************************************************************
     void set(Vector3d refPoint, float radias) {
         mRefPoint = refPoint;
-        mRadias = abs(radias);//negative radias would make no sense?  well it would create a buffer zone?
+        mRadias = myAbs(radias);//negative radias would make no sense?  well it would create a buffer zone?
     }
 
 

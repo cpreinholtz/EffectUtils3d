@@ -13,6 +13,15 @@ TODO
 - Sparkle
 - gradient
 - 
+### Movment
+- Flatten
+    - take all points and slowly project them onto a plane via translation, far away points move quicker etc.
+    - consider making the movment asemtotic / proportional to distance
+- Revolve
+    - pick a point to rotate around
+    - make the "axis" changable per object?
+    - again make speed a 2nd or thrid order equation?
+
 ### Merging Effects
 - Mixing
     - overlay. One layer takes priority over others with configurable opacity
@@ -55,7 +64,8 @@ TODO
     - normal vector
     - height (distance from center to apex)
     - todo
-        - add "plane" for bottom circle, used in distance and determening "height" by distance from top point
+        - add "plane" for bottom circle, used in distance and determening "height" by distance from top point?
+        - add "line" for center line?
 - line segment
     - refPoint
     - refPoint2? Length + directionVector?
@@ -74,7 +84,21 @@ TODO
 
 
 Making visial studio project
+- don't forget 'git submodule update --init'
 - make new project I suggest placing in VS folder
 - header files> add existing > src/\*.h
 - source files> add existing > test/test.cpp
 - right click project in solution explorer > properties > c/c++ > general > additional include dirs> add /src/
+
+
+
+include these files
+C:\Users\clark\Documents\Arduino\libraries\EffectUtils3d\src;
+C:\Users\clark\Documents\Arduino\libraries\EffectUtils3d\dependencies\ColorUtilsHsi\include;
+C:\Program Files (x86)\Arduino183Teensy153\hardware\tools\avr\lib\gcc\avr\5.4.0\include;
+C:\Program Files (x86)\Arduino183Teensy153\hardware\arduino\avr\cores\arduino;
+C:\Program Files (x86)\Arduino183Teensy153\hardware\arduino\avr\variants\standard;
+C:\Program Files (x86)\Arduino183Teensy153;
+
+
+C:\Users\clark\Documents\Arduino\libraries\EffectUtils3d\src;C:\Users\clark\Documents\Arduino\libraries\EffectUtils3d\dependencies\ColorUtilsHsi\include;C:\Program Files (x86)\Arduino183Teensy153\hardware\tools\avr\lib\gcc\avr\5.4.0\include;C:\Program Files (x86)\Arduino183Teensy153\hardware\arduino\avr\cores\arduino;C:\Program Files (x86)\Arduino183Teensy153\hardware\arduino\avr\variants\standard;C:\Program Files (x86)\Arduino183Teensy153;

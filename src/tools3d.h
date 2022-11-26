@@ -11,7 +11,7 @@ float radToDeg(float rad) {
 }
 
 
-float abs(float res) {
+float myAbs(float res) {
     if (res < 0.0) res = -res;  //ABS
     return res;
 }

@@ -1,0 +1,3 @@
+[submodule "dependencies/ColorUtilsHsi"]
+	path = dependencies/ColorUtilsHsi
+	url = https://github.com/Aerokeith/ColorUtilsHsi.git

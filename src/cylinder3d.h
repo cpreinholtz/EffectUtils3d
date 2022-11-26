@@ -28,7 +28,7 @@ public:
     //**************************************************************
     void set(Vector3d refPoint, Vector3d directionVector, float radias) {
         mCenterLine.set(refPoint, directionVector);
-        mRadias = abs(radias);//negative radias would make no sense?  well it would create a buffer zone?
+        mRadias = myAbs(radias);//negative radias would make no sense?  well it would create a buffer zone?
     }
 
 

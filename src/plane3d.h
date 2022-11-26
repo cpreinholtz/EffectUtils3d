@@ -103,3 +103,151 @@ public:
 
 };
 
+
+class AnimatedObject {
+public: 
+
+
+    const float kFramePeriodSeconds = 1/60.0;   //one frame period for all animated objs //might want to make this static but that would require modifying the initializer
+    float mAnimationTimeSeconds;//total time for this "effect"
+    bool mActive;
+
+    int mCurrentStep;
+    int mTotalSteps;
+
+    //**************************************************************
+    // Constructors
+    //**************************************************************
+    AnimatedObject() {
+        mAnimationTimeSeconds = 0.0;
+        mActive = false;
+    }
+    //**************************************************************
+    // Actions
+    //**************************************************************
+    // Pure Virtual Functions
+    virtual void prepare(float seconds) = 0;
+    virtual void start() = 0;
+    virtual void stop() = 0;
+virtual void step() = 0;
+virtual void endOfAnimationCleanup() = 0;
+
+//check current step vs total steps to see if animation is finised
+bool checkIfDone() {
+    if (mTotalSteps <= 0) {
+        return false;
+    }
+    else if (mCurrentStep < mTotalSteps) {
+        return false;
+    }
+    else {
+        return true;
+    }
+}
+
+//increment Step counter, then 
+void endOfStepCleanup() {
+    mCurrentStep = mCurrentStep + 1;
+    if (checkIfDone()) {
+        endOfAnimationCleanup();
+        mActive = false;
+    }
+}
+
+
+
+};
+
+
+
+class AnimatedPlane3d :AnimatedObject {
+
+    //the plane will be described using the point normal method (a reference point on the plane and a non-zero vector orthogonal to the plane)
+    Plane3d mPlane;
+
+    //the user describes the FINAL plane position
+    Plane3d mDesiredPlane;
+
+    enum eTranslationMode
+    {
+        TRANSLATE_LINEAR,
+        TRANSLATE_PROPORTIONAL,
+    };
+    eTranslationMode mTranslationMode;
+
+    //**************************************************************
+    // Constructors
+    //**************************************************************
+
+
+
+    //**************************************************************
+    // Setters
+    //**************************************************************
+
+
+    //**************************************************************
+    // getters
+    //**************************************************************
+
+    //**************************************************************
+    // Animations
+    //**************************************************************
+    //flip / strobe normal vector
+
+
+
+    //translate ref point
+    void setTranslation(Vector3d endPoint, eTranslationMode mode = TRANSLATE_LINEAR) {
+        mTranslationMode = mode;
+        mDesiredPlane.mRefPoint = endPoint;
+    }
+
+
+
+    // rotate ref point
+
+    //translate normal vector
+
+    // rotate normal vector
+
+
+    //**************************************************************
+    // Actions
+    //**************************************************************
+    void prepare(float seconds) {
+        mTotalSteps = (int)round(seconds / kFramePeriodSeconds);
+        mDesiredPlane = mPlane;
+        //mCurrentStep = 1;
+    }
+
+    void start() {
+        mActive = true;
+        mCurrentStep = 0;
+    }
+    void stop() {
+        mActive = false;
+    }
+    void step() {
+        if (mActive == true) {
+            //Do something HERE TODO
+
+            if (mTranslationMode == TRANSLATE_LINEAR){
+                Vector3d detlaRef = (mDesiredPlane.mRefPoint - mPlane.mRefPoint) / (mTotalSteps - mCurrentStep);
+            }
+            else if (mTranslationMode == TRANSLATE_PROPORTIONAL) {
+                //int stepsLeft = mTotalSteps - mCurrentStep;
+                //float stepRatio = (stepsLeft / mTotalSteps ); // the more steps left to do, the "faster" this animation will run                
+                Vector3d detlaRef = (mDesiredPlane.mRefPoint - mPlane.mRefPoint) * 0.1 / mTotalSteps;
+            }
+            endOfStepCleanup();
+        }
+    }
+
+    void endOfAnimationCleanup() {
+        //TODO
+        mPlane = mDesiredPlane;
+    }
+};
+
+

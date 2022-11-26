@@ -12,7 +12,24 @@ float constrain(float f1, float min, float max) {
 
 #define TEST_CONFIG 1
 
+
+//include direcories
+
+/*
+C:\Users\clark\Documents\Arduino\libraries\EffectUtils3d\src;
+C:\Users\clark\Documents\Arduino\libraries\EffectUtils3d\dependencies\ColorUtilsHsi\include;
+C:\Users\clark\Documents\Arduino\libraries\EffectUtils3d\test;
+C:\Users\clark\Documents\Arduino\libraries\EffectUtils3d\src;C:\Users\clark\Documents\Arduino\libraries\EffectUtils3d\dependencies\ColorUtilsHsi\include;C:\Users\clark\Documents\Arduino\libraries\EffectUtils3d\test;
+
+NOT INCLUDED
+C:\Program Files(x86)\Arduino183Teensy153\hardware\tools\avr\lib\gcc\avr\5.4.0\include;
+C:\Program Files(x86)\Arduino183Teensy153\hardware\arduino\avr\cores\arduino;
+C:\Program Files(x86)\Arduino183Teensy153\hardware\arduino\avr\variants\standard;
+C:\Program Files(x86)\Arduino183Teensy153;
+*/
+
 #include <plane3d.h>
+#include <pixel3d.h>
 
 
 
@@ -155,8 +172,55 @@ int run_tests() {
 }
 
 
+const int nPix1d = 2; 
+const int nPix = nPix1d * nPix1d * nPix1d;
+Pixel3d  testPixels[nPix];
+
+
+
+
+
+void printAnimation() {
+
+    cout << "*************************************" << endl;
+    int index = 0;
+    for (int i = 0; i < nPix1d; i++) {
+        cout << "X = " << i <<endl;
+        cout << "_" <<endl;
+        for (int j = 0; j < nPix1d; j++) {
+            cout << "y = " << j << " | ";
+            for (int k = 0; k < nPix1d; k++, index++) {
+
+                cout << testPixels[index].mColor.h << ",";
+            }
+            cout << "|" <<endl;
+        }
+        cout << "_" <<endl << endl ;
+    }
+    cout << "*************************************" << endl;
+
+}
+
+
+void testAnimation() {
+    int index = 0;
+    for (int i = 0; i < nPix1d; i++) {
+        for (int j = 0; j < nPix1d; j++) {
+            for (int k = 0; k < nPix1d; k++, index++) {
+                testPixels[index].mPosition = Vector3d(i, j, k);
+            }
+        }
+    }
+    printAnimation();
+
+
+}
+
+
 
 int main(int argc, char **argv){
     cout << "Beggining test sequence\n";
-    return run_tests();
+    testAnimation();
+    return 0;
+    //return run_tests();
 }
