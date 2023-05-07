@@ -38,6 +38,28 @@ public:
         phi = constrain(p, 0, 180);
     }
 
+    void set(Vector3d v) {
+        float r = sqrt(pow(v.mX, 2) + pow(v.mY, 2) + pow(v.mZ, 2));
+        float t = 0;
+        if (v.mY > 0 && v.mX > 0) {
+            t = radToDeg(atan(abs(v.mY) / abs(v.mX))) ;
+        }
+        else if (v.mY > 0 && v.mX < 0) {
+            t = 180.0 - radToDeg(atan(v.mY / abs(v.mX))) ;
+        }
+        else if (v.mY < 0 && v.mX < 0) {
+            t = 180.0 + radToDeg(atan(abs(v.mY) / abs(v.mX))) ;
+        } 
+        else if (v.mY < 0 && v.mX > 0) {
+            t = 360 - radToDeg(atan(abs(v.mY) / v.mX));
+        }        
+        float p = radToDeg(acos(v.mZ / r));
+        set(r, t, p);
+    }
+
+    //**************************************************************
+    // getters
+    //**************************************************************
     Vector3d getVector3d(){
         float x = radias * sin(degToRad(phi)) * cos(degToRad(theta));
         float y = radias * sin(degToRad(phi)) * sin(degToRad(theta));

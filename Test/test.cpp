@@ -87,7 +87,10 @@ int run_tests() {
         for (int i = 0; i < nLEDs; i++) {
             float theta = i * thetaSeperation;
             coords[row][i].set(radias, theta, phi);
-            cout << "(" << radias << "," << theta << "," << phi << ")" << coords[row][i] << endl << coords[row][i].getVector3d() << endl << endl;
+            Vector3d vector(coords[row][i].getVector3d());
+            cout << "(" << radias << "," << theta << "," << phi << ")" << coords[row][i] << endl << vector << endl;
+            coords[row][i].set(vector);
+            cout << coords[row][i]  << endl << endl;
         }
     }
     cout << "end sherical test " << endl;
