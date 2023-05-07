@@ -3,6 +3,7 @@ Open source under the MIT License
 
 A resource for 3d effects usefull for animation and light displays
 
+
 Inspired by https://github.com/Aerokeith/EffectUtils.git
 
 TODO

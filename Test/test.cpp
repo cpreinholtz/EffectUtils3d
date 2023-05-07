@@ -4,8 +4,14 @@ using namespace std;
 
 typedef uint8_t byte;
 float constrain(float f1, float min, float max) {
-    if (f1 < min) return min;
-    else if (f1 < max) return max;
+    if (f1 < min) {
+        cout << "warning minimum contrained" << f1 << " " << min << endl;
+        return min;
+    }
+    else if (f1 < max) {
+        cout << "warning maximum contrained" << f1 << " " << max << endl;
+        return max;
+    }
     else return f1;
 }
 
@@ -30,12 +36,61 @@ C:\Program Files(x86)\Arduino183Teensy153;
 
 #include <plane3d.h>
 #include <pixel3d.h>
+#include <coordinate_spherical.h>
 
 
 
 
 
 int run_tests() {
+
+    //**************************************************************
+    // Spherical pixels
+    //**************************************************************
+
+    /*        5 rows = 6 equal spaces along a sphere ( we dont want to include edges as pixel rows
+    *          .....
+             /  ---  \
+            /  -----  \
+           (  -------  )
+            \  -----  /
+             \  ---  /
+               .....
+    */
+    const float madeupUnitsPerMeter = 10; // this just makes things easier to read by upping the scale of everything
+    const float radias = madeupUnitsPerMeter * 0.6096; // meters
+    const float diameter = 2.0 * radias;
+    const int rows = 5;
+    const float ledSpacing = 1.0/30.0 * madeupUnitsPerMeter; //1/30 meters per led
+    const float phiSeperation = 180.0 / (rows + 1);
+    const float zSeperation = radias * 2.0 / (rows + 1);
+    
+    //const int maxLedPerStrip = floor(radias / ledSpacing);
+    const int maxLedPerStrip = 18;
+
+    cout << "radias " << radias << "ledSpacing " << ledSpacing << "maxLedPerStrip " << maxLedPerStrip << endl;
+
+
+    
+    CoordSpherical coords[rows][maxLedPerStrip];//this is a rather lazy way of doing this//
+
+
+    for (int row = 0; row < rows; row++) {
+        float phi = (row+1) * phiSeperation;
+        float height = (row+1) * zSeperation;
+        float segmentRadias = radias * sin(PI *  height / diameter );
+        int nLEDs = floor(segmentRadias / ledSpacing);
+        float thetaSeperation = 360.0 / (nLEDs);
+        cout << "row " << row << " height " << height << " segmentRadias " << segmentRadias  << "nLeds" << nLEDs << " thetaSeperation " << thetaSeperation << endl;
+
+
+        for (int i = 0; i < nLEDs; i++) {
+            float theta = i * thetaSeperation;
+            coords[row][i].set(radias, theta, phi);
+            cout << "(" << radias << "," << theta << "," << phi << ")" << coords[row][i] << endl << coords[row][i].getVector3d() << endl << endl;
+        }
+    }
+    cout << "end sherical test " << endl;
 
     //**************************************************************
     // Coordinates
@@ -220,7 +275,7 @@ void testAnimation() {
 
 int main(int argc, char **argv){
     cout << "Beggining test sequence\n";
-    testAnimation();
-    return 0;
-    //return run_tests();
+    //testAnimation();
+    //return 0;
+    return run_tests();
 }

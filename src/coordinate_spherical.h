@@ -1,5 +1,11 @@
 #pragma once
 
+#ifdef TEST_CONFIG
+#include <cmath>
+#endif
+
+#include <vector3d.h>
+
 
 class CoordSpherical {
 public:
@@ -28,14 +34,19 @@ public:
     //set by passing in x, y, and z
     void set(float r, float t, float p) {
         radias = r;
-        theta = constrain(theta, 0, 360);
-        phi = constrain(theta, 0, 180);
+        theta = constrain(t, 0, 360);
+        phi = constrain(p, 0, 180);
     }
 
-    void set(Coord3d c
-        art) {
-        radias =
+    Vector3d getVector3d(){
+        float x = radias * sin(degToRad(phi)) * cos(degToRad(theta));
+        float y = radias * sin(degToRad(phi)) * sin(degToRad(theta));
+        float z = radias * cos(degToRad(phi));
+        Vector3d vector(x, y, z);
+        return vector;
     }
+
+    
 
 
 
@@ -46,7 +57,7 @@ public:
 #ifdef TEST_CONFIG
 #include <iostream>
 
-    friend ostream& operator<<(ostream& os, const Coord3d& dt) {
+    friend ostream& operator<<(ostream& os, const CoordSpherical& dt) {
         os << "(" << dt.radias << "," << dt.theta << "," << dt.phi << ")";
         return os;
     }
