@@ -1,7 +1,7 @@
 #pragma once
 
 
-#define PI 3.14159265359
+//#define PI 3.14159265359
 
 float degToRad(float deg) {
     return deg * PI / 180.0;

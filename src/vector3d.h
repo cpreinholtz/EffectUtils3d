@@ -111,19 +111,19 @@ public:
     //these are assuming +x is right, +y is back (further) and +z is up
     //https://stackoverflow.com/questions/14607640/rotating-a-vector-in-3d-space
     
-    //rotate around the Z axis given theta in radians (+ is CW right, - is CCW left)
-    void yaw(float theta) {
-        set(mX * cos(theta) - mY * sin(theta), mX * sin(theta) + mY * cos(theta), mZ);
+    //rotate around the Z axis given theta in radians
+    void yaw(float theta) {    
+        set(mX * cosf(theta) - mY * sinf(theta), mX * sinf(theta) + mY * cosf(theta), mZ);
     }
 
-    //rotate around x axis given theta in radians (+theta looks down(rotates forward for CW from + axis))
+    //rotate around Y axis given theta in radians
+    void roll(float theta) {    
+        set(mX * cosf(theta) + mZ * sinf(theta), mY, -mX * sinf(theta) + mZ * cosf(theta));
+    }
+
+    //rotate around x axis given theta in radians
     void pitch(float theta) {
-        set(mX * cos(theta) + mZ * sin(theta), mY, -mX * sin(theta) + mZ * cos(theta));
-    }
-
-    //rotate around Y axis given theta in radians(+theta rolls left, (left wing down is CW))
-    void roll(float theta) {
-        set(mX, mY * cos(theta) - mZ * sin(theta), mY*sin(theta) + mZ * cos(theta)) ;
+        set(mX, mY * cosf(theta) - mZ * sinf(theta), mY*sinf(theta) + mZ * cosf(theta)) ;
     }
 
     //**************************************************************

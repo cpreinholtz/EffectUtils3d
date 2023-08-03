@@ -26,8 +26,20 @@ public:
     // setters
     //**************************************************************
     void set(Vector3d refPoint, float radias) {
-        mRefPoint = refPoint;
-        mRadias = myAbs(radias);//negative radias would make no sense?  well it would create a buffer zone?
+        setRefpoint(refPoint);
+        setRadias(radias);
+    }
+
+    void setRadias(float radias){
+      mRadias = myAbs(radias);//negative radias would make no sense?  well it would create a buffer zone?
+    }
+
+    void setRefpoint(float x, float y, float z){
+      Vector3d refPoint(x, y, z);
+      setRefpoint(refPoint);
+    }
+    void setRefpoint(Vector3d refPoint){
+      mRefPoint = refPoint;
     }
 
 
@@ -51,6 +63,11 @@ public:
         d = d - mRadias;
         //if radias is negative all things will apear dist to center+R which would be odd but interesting
         return d;
+    }
+
+    float distance(float x, float y, float z) const {
+      Vector3d refPoint(x, y, z);
+      return distance(refPoint);
     }
 
 

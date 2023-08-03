@@ -46,10 +46,51 @@ public:
     // setters
     //**************************************************************
     void set(Vector3d refPoint, Vector3d normalVector) {
-        mRefPoint = refPoint;
+        setRefpoint(refPoint);
+        setNormal(normalVector);
+    }
+
+
+    void setNormal(float x, float y, float z){
+      Vector3d normalVector(x, y, z);
+      setNormal(normalVector);
+    }
+
+    void setNormal(Vector3d normalVector) {
         mNormalVector = normalVector;
         mNormalVector.constrianNonZero();
         mNormalVector.makeUnitVector();
+    }
+
+    void setRefpoint(float x, float y, float z){
+      Vector3d refPoint(x, y, z);
+      setRefpoint(refPoint);
+    }
+    void setRefpoint(Vector3d refPoint){
+      mRefPoint = refPoint;
+    }
+
+
+
+    //**************************************************************
+    // actions (Rotations about the three Axis)
+    //**************************************************************
+    //these are assuming +x is right, +y is back (further) and +z is up
+    //https://stackoverflow.com/questions/14607640/rotating-a-vector-in-3d-space
+    
+    //rotate around the Z axis given theta in radians (+ is CW right, - is CCW left)
+    void yaw(float theta) {
+        mNormalVector.yaw(theta);
+    }
+
+    //rotate around x axis given theta in radians (+theta looks down(rotates forward for CW from + axis))
+    void pitch(float theta) {
+        mNormalVector.pitch(theta);
+    }
+
+    //rotate around Y axis given theta in radians(+theta rolls left, (left wing down is CW))
+    void roll(float theta) {
+        mNormalVector.roll(theta);
     }
 
 
@@ -233,12 +274,12 @@ class AnimatedPlane3d :AnimatedObject {
             //Do something HERE TODO
 
             if (mTranslationMode == TRANSLATE_LINEAR){
-                Vector3d detlaRef = (mDesiredPlane.mRefPoint - mPlane.mRefPoint) / (mTotalSteps - mCurrentStep);
+                //Vector3d detlaRef = (mDesiredPlane.mRefPoint - mPlane.mRefPoint) / (mTotalSteps - mCurrentStep);
             }
             else if (mTranslationMode == TRANSLATE_PROPORTIONAL) {
                 //int stepsLeft = mTotalSteps - mCurrentStep;
                 //float stepRatio = (stepsLeft / mTotalSteps ); // the more steps left to do, the "faster" this animation will run                
-                Vector3d detlaRef = (mDesiredPlane.mRefPoint - mPlane.mRefPoint) * 0.1 / mTotalSteps;
+                //Vector3d detlaRef = (mDesiredPlane.mRefPoint - mPlane.mRefPoint) * 0.1 / mTotalSteps;
             }
             endOfStepCleanup();
         }
